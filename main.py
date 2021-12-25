@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QPainter, QColor
-from PyQt5 import uic
+from UI import Ui_MainWindow
 
 
 def log_uncought_exeptions(ex_cls, ex, tb):
@@ -17,10 +17,10 @@ def log_uncought_exeptions(ex_cls, ex, tb):
 sys.excepthook = log_uncought_exeptions
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
+        self.setupUi(self)
         self.do_paint = False
         self.initUI()
 
@@ -37,9 +37,9 @@ class MyWidget(QMainWindow):
             from random import randint
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor("yellow"))
-            radius = randint(1, 50)
+            radius = randint(10, 50)
             for _ in range(randint(5, 11)):
+                qp.setBrush(QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
                 x = randint(50, 750)
                 y = randint(50, 400)
                 qp.drawEllipse(x, y, radius, radius)
